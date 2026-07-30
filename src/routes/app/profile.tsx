@@ -43,7 +43,7 @@ const profileSchema = z.object({
 const BLOOD_GROUPS = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
 function ProfilePage() {
-  const { user, profile, roles, refreshProfile } = useAuth();
+  const { user, profile, roles, refresh } = useAuth();
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
@@ -85,7 +85,7 @@ function ProfilePage() {
         } as never)
         .eq("id", user!.id);
       if (error) throw new Error(error.message);
-      await refreshProfile();
+      await refresh();
     },
     onSuccess: () => toast.success("Profile updated"),
     onError: (e: Error) => toast.error(e.message),
