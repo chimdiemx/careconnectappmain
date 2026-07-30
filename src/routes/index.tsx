@@ -24,7 +24,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "CareConnect — Online Clinic Appointment Booking" },
       {
         property: "og:description",
-        content: "A secure clinic appointment and medical records platform for patients, doctors and administrators.",
+        content: "Book clinic appointments online, manage doctor schedules, keep medical records secure and track clinic performance with CareConnect.",
       },
     ],
   }),

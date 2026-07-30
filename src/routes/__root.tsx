@@ -79,20 +79,24 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CareConnect Clinic Appointment System" },
+      { title: "CareConnect — Online Clinic Appointment Booking" },
       {
         name: "description",
         content:
-          "CareConnect is a secure clinic platform for online appointment booking, doctor schedules, medical records and clinic reporting.",
+          "Book clinic appointments online, manage doctor schedules, keep medical records secure and track clinic performance with CareConnect.",
       },
       { name: "author", content: "CareConnect" },
-      { property: "og:title", content: "CareConnect Clinic Appointment System" },
+      { property: "og:title", content: "CareConnect — Online Clinic Appointment Booking" },
       {
         property: "og:description",
-        content: "Book appointments, manage schedules and keep patient records in one secure clinic platform.",
+        content: "Book clinic appointments online, manage doctor schedules, keep medical records secure and track clinic performance with CareConnect.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "CareConnect — Online Clinic Appointment Booking" },
+      { name: "twitter:description", content: "Book clinic appointments online, manage doctor schedules, keep medical records secure and track clinic performance with CareConnect." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/5d527cf7-2e3b-43d7-8d04-5231a03615df" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/5d527cf7-2e3b-43d7-8d04-5231a03615df" },
     ],
     links: [
       {
@@ -105,7 +109,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap",
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
