@@ -10,33 +10,181 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as AppAdminRouteImport } from './routes/app/admin'
+import { Route as AppAppointmentsRouteImport } from './routes/app/appointments'
+import { Route as AppBookRouteImport } from './routes/app/book'
+import { Route as AppDashboardRouteImport } from './routes/app/dashboard'
+import { Route as AppDoctorsRouteImport } from './routes/app/doctors'
+import { Route as AppPatientsRouteImport } from './routes/app/patients'
+import { Route as AppProfileRouteImport } from './routes/app/profile'
+import { Route as AppRecordsRouteImport } from './routes/app/records'
+import { Route as AppSearchRouteImport } from './routes/app/search'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminRoute = AppAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAppointmentsRoute = AppAppointmentsRouteImport.update({
+  id: '/appointments',
+  path: '/appointments',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppBookRoute = AppBookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDashboardRoute = AppDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDoctorsRoute = AppDoctorsRouteImport.update({
+  id: '/doctors',
+  path: '/doctors',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPatientsRoute = AppPatientsRouteImport.update({
+  id: '/patients',
+  path: '/patients',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppProfileRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppRecordsRoute = AppRecordsRouteImport.update({
+  id: '/records',
+  path: '/records',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSearchRoute = AppSearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/app/admin': typeof AppAdminRoute
+  '/app/appointments': typeof AppAppointmentsRoute
+  '/app/book': typeof AppBookRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/doctors': typeof AppDoctorsRoute
+  '/app/patients': typeof AppPatientsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/records': typeof AppRecordsRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/app/admin': typeof AppAdminRoute
+  '/app/appointments': typeof AppAppointmentsRoute
+  '/app/book': typeof AppBookRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/doctors': typeof AppDoctorsRoute
+  '/app/patients': typeof AppPatientsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/records': typeof AppRecordsRoute
+  '/app/search': typeof AppSearchRoute
+  '/app': typeof AppIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/app/admin': typeof AppAdminRoute
+  '/app/appointments': typeof AppAppointmentsRoute
+  '/app/book': typeof AppBookRoute
+  '/app/dashboard': typeof AppDashboardRoute
+  '/app/doctors': typeof AppDoctorsRoute
+  '/app/patients': typeof AppPatientsRoute
+  '/app/profile': typeof AppProfileRoute
+  '/app/records': typeof AppRecordsRoute
+  '/app/search': typeof AppSearchRoute
+  '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/app/admin'
+    | '/app/appointments'
+    | '/app/book'
+    | '/app/dashboard'
+    | '/app/doctors'
+    | '/app/patients'
+    | '/app/profile'
+    | '/app/records'
+    | '/app/search'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/app/admin'
+    | '/app/appointments'
+    | '/app/book'
+    | '/app/dashboard'
+    | '/app/doctors'
+    | '/app/patients'
+    | '/app/profile'
+    | '/app/records'
+    | '/app/search'
+    | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/auth'
+    | '/app/admin'
+    | '/app/appointments'
+    | '/app/book'
+    | '/app/dashboard'
+    | '/app/doctors'
+    | '/app/patients'
+    | '/app/profile'
+    | '/app/records'
+    | '/app/search'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +196,126 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/admin': {
+      id: '/app/admin'
+      path: '/admin'
+      fullPath: '/app/admin'
+      preLoaderRoute: typeof AppAdminRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/appointments': {
+      id: '/app/appointments'
+      path: '/appointments'
+      fullPath: '/app/appointments'
+      preLoaderRoute: typeof AppAppointmentsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/book': {
+      id: '/app/book'
+      path: '/book'
+      fullPath: '/app/book'
+      preLoaderRoute: typeof AppBookRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/dashboard': {
+      id: '/app/dashboard'
+      path: '/dashboard'
+      fullPath: '/app/dashboard'
+      preLoaderRoute: typeof AppDashboardRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/doctors': {
+      id: '/app/doctors'
+      path: '/doctors'
+      fullPath: '/app/doctors'
+      preLoaderRoute: typeof AppDoctorsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/patients': {
+      id: '/app/patients'
+      path: '/patients'
+      fullPath: '/app/patients'
+      preLoaderRoute: typeof AppPatientsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/profile': {
+      id: '/app/profile'
+      path: '/profile'
+      fullPath: '/app/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/records': {
+      id: '/app/records'
+      path: '/records'
+      fullPath: '/app/records'
+      preLoaderRoute: typeof AppRecordsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/search': {
+      id: '/app/search'
+      path: '/search'
+      fullPath: '/app/search'
+      preLoaderRoute: typeof AppSearchRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppAdminRoute: typeof AppAdminRoute
+  AppAppointmentsRoute: typeof AppAppointmentsRoute
+  AppBookRoute: typeof AppBookRoute
+  AppDashboardRoute: typeof AppDashboardRoute
+  AppDoctorsRoute: typeof AppDoctorsRoute
+  AppPatientsRoute: typeof AppPatientsRoute
+  AppProfileRoute: typeof AppProfileRoute
+  AppRecordsRoute: typeof AppRecordsRoute
+  AppSearchRoute: typeof AppSearchRoute
+  AppIndexRoute: typeof AppIndexRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppAdminRoute: AppAdminRoute,
+  AppAppointmentsRoute: AppAppointmentsRoute,
+  AppBookRoute: AppBookRoute,
+  AppDashboardRoute: AppDashboardRoute,
+  AppDoctorsRoute: AppDoctorsRoute,
+  AppPatientsRoute: AppPatientsRoute,
+  AppProfileRoute: AppProfileRoute,
+  AppRecordsRoute: AppRecordsRoute,
+  AppSearchRoute: AppSearchRoute,
+  AppIndexRoute: AppIndexRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
