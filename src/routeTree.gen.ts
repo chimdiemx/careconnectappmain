@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AppIndexRouteImport } from './routes/app/index'
+import { Route as AppAdminRouteImport } from './routes/app/admin'
 import { Route as AppAppointmentsRouteImport } from './routes/app/appointments'
 import { Route as AppBookRouteImport } from './routes/app/book'
 import { Route as AppDashboardRouteImport } from './routes/app/dashboard'
@@ -40,6 +41,11 @@ const AuthRoute = AuthRouteImport.update({
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppAdminRoute = AppAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AppRoute,
 } as any)
 const AppAppointmentsRoute = AppAppointmentsRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/app/admin': typeof AppAdminRoute
   '/app/appointments': typeof AppAppointmentsRoute
   '/app/book': typeof AppBookRoute
   '/app/dashboard': typeof AppDashboardRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/app/admin': typeof AppAdminRoute
   '/app/appointments': typeof AppAppointmentsRoute
   '/app/book': typeof AppBookRoute
   '/app/dashboard': typeof AppDashboardRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/auth': typeof AuthRoute
+  '/app/admin': typeof AppAdminRoute
   '/app/appointments': typeof AppAppointmentsRoute
   '/app/book': typeof AppBookRoute
   '/app/dashboard': typeof AppDashboardRoute
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/auth'
+    | '/app/admin'
     | '/app/appointments'
     | '/app/book'
     | '/app/dashboard'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/app/admin'
     | '/app/appointments'
     | '/app/book'
     | '/app/dashboard'
@@ -158,6 +169,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/auth'
+    | '/app/admin'
     | '/app/appointments'
     | '/app/book'
     | '/app/dashboard'
@@ -203,6 +215,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/app/'
       preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/admin': {
+      id: '/app/admin'
+      path: '/admin'
+      fullPath: '/app/admin'
+      preLoaderRoute: typeof AppAdminRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/appointments': {
@@ -265,6 +284,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppAdminRoute: typeof AppAdminRoute
   AppAppointmentsRoute: typeof AppAppointmentsRoute
   AppBookRoute: typeof AppBookRoute
   AppDashboardRoute: typeof AppDashboardRoute
@@ -277,6 +297,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAdminRoute: AppAdminRoute,
   AppAppointmentsRoute: AppAppointmentsRoute,
   AppBookRoute: AppBookRoute,
   AppDashboardRoute: AppDashboardRoute,
