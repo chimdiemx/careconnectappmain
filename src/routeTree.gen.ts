@@ -16,6 +16,7 @@ import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as AppAppointmentsRouteImport } from './routes/app/appointments'
 import { Route as AppBookRouteImport } from './routes/app/book'
 import { Route as AppDashboardRouteImport } from './routes/app/dashboard'
+import { Route as AppDoctorsRouteImport } from './routes/app/doctors'
 import { Route as AppRecordsRouteImport } from './routes/app/records'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppDoctorsRoute = AppDoctorsRouteImport.update({
+  id: '/doctors',
+  path: '/doctors',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppRecordsRoute = AppRecordsRouteImport.update({
   id: '/records',
   path: '/records',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/app/appointments': typeof AppAppointmentsRoute
   '/app/book': typeof AppBookRoute
   '/app/dashboard': typeof AppDashboardRoute
+  '/app/doctors': typeof AppDoctorsRoute
   '/app/records': typeof AppRecordsRoute
   '/app/': typeof AppIndexRoute
 }
@@ -75,6 +82,7 @@ export interface FileRoutesByTo {
   '/app/appointments': typeof AppAppointmentsRoute
   '/app/book': typeof AppBookRoute
   '/app/dashboard': typeof AppDashboardRoute
+  '/app/doctors': typeof AppDoctorsRoute
   '/app/records': typeof AppRecordsRoute
   '/app': typeof AppIndexRoute
 }
@@ -86,6 +94,7 @@ export interface FileRoutesById {
   '/app/appointments': typeof AppAppointmentsRoute
   '/app/book': typeof AppBookRoute
   '/app/dashboard': typeof AppDashboardRoute
+  '/app/doctors': typeof AppDoctorsRoute
   '/app/records': typeof AppRecordsRoute
   '/app/': typeof AppIndexRoute
 }
@@ -98,6 +107,7 @@ export interface FileRouteTypes {
     | '/app/appointments'
     | '/app/book'
     | '/app/dashboard'
+    | '/app/doctors'
     | '/app/records'
     | '/app/'
   fileRoutesByTo: FileRoutesByTo
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/app/appointments'
     | '/app/book'
     | '/app/dashboard'
+    | '/app/doctors'
     | '/app/records'
     | '/app'
   id:
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/app/appointments'
     | '/app/book'
     | '/app/dashboard'
+    | '/app/doctors'
     | '/app/records'
     | '/app/'
   fileRoutesById: FileRoutesById
@@ -178,6 +190,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/doctors': {
+      id: '/app/doctors'
+      path: '/doctors'
+      fullPath: '/app/doctors'
+      preLoaderRoute: typeof AppDoctorsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/records': {
       id: '/app/records'
       path: '/records'
@@ -192,6 +211,7 @@ interface AppRouteChildren {
   AppAppointmentsRoute: typeof AppAppointmentsRoute
   AppBookRoute: typeof AppBookRoute
   AppDashboardRoute: typeof AppDashboardRoute
+  AppDoctorsRoute: typeof AppDoctorsRoute
   AppRecordsRoute: typeof AppRecordsRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -200,6 +220,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppAppointmentsRoute: AppAppointmentsRoute,
   AppBookRoute: AppBookRoute,
   AppDashboardRoute: AppDashboardRoute,
+  AppDoctorsRoute: AppDoctorsRoute,
   AppRecordsRoute: AppRecordsRoute,
   AppIndexRoute: AppIndexRoute,
 }
