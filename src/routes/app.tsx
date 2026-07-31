@@ -79,11 +79,14 @@ function AppLayout() {
               key={item.to}
               to={item.to}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                pathname === item.to && "bg-sidebar-accent text-sidebar-accent-foreground",
+                "group relative flex items-center gap-3 overflow-hidden rounded-lg px-3 py-2 text-sm font-medium transition-[background-color,color,transform] duration-[var(--dur-fast)] ease-[var(--ease-standard)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:scale-[0.98]",
+                "before:absolute before:left-0 before:top-1/2 before:h-5 before:w-0.5 before:-translate-y-1/2 before:rounded-full before:bg-sidebar-primary before:transition-transform before:duration-[var(--dur-base)] before:ease-[var(--ease-emphasized)]",
+                pathname === item.to
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground before:scale-y-100"
+                  : "before:scale-y-0",
               )}
             >
-              <item.icon className="size-4" />
+              <item.icon className="size-4 transition-transform duration-[var(--dur-base)] ease-[var(--ease-spring)] group-hover:scale-110" />
               {item.label}
             </Link>
           ))}
@@ -95,7 +98,7 @@ function AppLayout() {
             variant="ghost"
             size="sm"
             onClick={handleSignOut}
-            className="mt-3 w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+            className="interactive mt-3 w-full justify-start text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
           >
             <LogOut className="mr-2 size-4" /> Sign out
           </Button>
@@ -115,7 +118,7 @@ function AppLayout() {
               key={item.to}
               to={item.to}
               className={cn(
-                "whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium",
+                "whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium transition-[background-color,color,transform] duration-[var(--dur-fast)] ease-[var(--ease-standard)] active:scale-95",
                 pathname === item.to ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground",
               )}
             >
@@ -123,7 +126,7 @@ function AppLayout() {
             </Link>
           ))}
         </div>
-        <main className="flex-1 px-5 py-8 md:px-8">
+        <main key={pathname} className="rise-in flex-1 px-5 py-8 md:px-8">
           <Outlet />
         </main>
       </div>

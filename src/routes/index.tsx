@@ -71,23 +71,23 @@ function Index() {
     <div className="min-h-screen bg-background">
       <header className="border-b border-border/60 bg-card/70 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold">
-            <span className="flex size-9 items-center justify-center rounded-xl bg-hero-gradient text-primary-foreground">
+          <Link to="/" className="group flex items-center gap-2 font-display text-lg font-semibold">
+            <span className="flex size-9 items-center justify-center rounded-xl bg-hero-gradient text-primary-foreground transition-transform duration-[var(--dur-base)] ease-[var(--ease-spring)] group-hover:rotate-[-6deg] group-hover:scale-105">
               <Stethoscope className="size-5" />
             </span>
             CareConnect
           </Link>
           <nav className="flex items-center gap-2">
             {session ? (
-              <Button asChild>
+              <Button asChild className="interactive">
                 <Link to="/app/dashboard">Go to dashboard</Link>
               </Button>
             ) : (
               <>
-                <Button asChild variant="ghost">
-                  <Link to="/auth">Sign in</Link>
+                <Button asChild variant="ghost" className="interactive">
+                  <Link to="/auth" className="underline-draw">Sign in</Link>
                 </Button>
-                <Button asChild>
+                <Button asChild className="interactive">
                   <Link to="/auth" search={{ mode: "register" }}>
                     Create account
                   </Link>
@@ -102,19 +102,19 @@ function Index() {
         <section className="bg-hero-gradient text-primary-foreground">
           <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:grid-cols-2 md:items-center">
             <div>
-              <p className="mb-3 inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
+              <p className="soft-in mb-3 inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-widest">
                 Clinic appointment system
               </p>
-              <h1 className="text-4xl font-bold leading-tight md:text-5xl">
+              <h1 className="rise-in text-4xl font-bold leading-tight md:text-5xl [--delay:80ms]">
                 Healthcare scheduling without the paper diary.
               </h1>
-              <p className="mt-5 max-w-lg text-base/7 opacity-90">
+              <p className="rise-in mt-5 max-w-lg text-base/7 opacity-90 [--delay:160ms]">
                 CareConnect replaces manual appointment books with online booking, live doctor
                 availability, digital medical records and automated reminders — cutting no-shows and
                 administrative workload.
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button asChild size="lg" variant="secondary">
+              <div className="rise-in mt-8 flex flex-wrap gap-3 [--delay:240ms]">
+                <Button asChild size="lg" variant="secondary" className="interactive">
                   <Link to="/auth" search={{ mode: "register" }}>
                     Register as a patient
                   </Link>
@@ -123,23 +123,24 @@ function Index() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="border-white/40 bg-transparent text-primary-foreground hover:bg-white/10"
+                  className="interactive border-white/40 bg-transparent text-primary-foreground hover:bg-white/10"
                 >
                   <Link to="/auth">Staff sign in</Link>
                 </Button>
               </div>
             </div>
-            <div className="rounded-2xl bg-white/10 p-6 shadow-lift ring-1 ring-white/20">
+            <div className="soft-in sheen-once rounded-2xl bg-white/10 p-6 shadow-lift ring-1 ring-white/20 [--delay:320ms]">
               <div className="space-y-3">
                 {[
                   { label: "Today's appointments", value: "18" },
                   { label: "Doctors available", value: "5" },
                   { label: "Attendance rate", value: "92%" },
                   { label: "Average booking time", value: "under 1 min" },
-                ].map((row) => (
+                ].map((row, i) => (
                   <div
                     key={row.label}
-                    className="flex items-center justify-between rounded-xl bg-white/10 px-4 py-3 text-sm"
+                    className="rise-in flex items-center justify-between rounded-xl bg-white/10 px-4 py-3 text-sm transition-colors duration-[var(--dur-fast)] hover:bg-white/20"
+                    style={{ "--delay": `${400 + i * 70}ms` } as React.CSSProperties}
                   >
                     <span className="opacity-85">{row.label}</span>
                     <span className="font-display text-lg font-semibold">{row.value}</span>
@@ -157,10 +158,14 @@ function Index() {
             appointments, medical records, reporting and search.
           </p>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature) => (
-              <Card key={feature.title} className="shadow-card">
+            {features.map((feature, i) => (
+              <Card
+                key={feature.title}
+                className="card-raise group soft-in shadow-card"
+                style={{ "--delay": `${i * 60}ms` } as React.CSSProperties}
+              >
                 <CardHeader>
-                  <feature.icon className="size-6 text-primary" />
+                  <feature.icon className="size-6 text-primary transition-transform duration-[var(--dur-base)] ease-[var(--ease-spring)] group-hover:-translate-y-0.5 group-hover:scale-110" />
                   <CardTitle className="mt-2 text-lg">{feature.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="text-sm text-muted-foreground">{feature.body}</CardContent>
@@ -175,7 +180,7 @@ function Index() {
             <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
               Create an account in seconds and book your first consultation with a CareConnect doctor.
             </p>
-            <Button asChild size="lg" className="mt-6">
+            <Button asChild size="lg" className="interactive mt-6">
               <Link to="/auth" search={{ mode: "register" }}>
                 Get started
               </Link>

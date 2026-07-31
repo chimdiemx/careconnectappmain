@@ -113,6 +113,15 @@
   --gradient-soft: linear-gradient(160deg, oklch(0.97 0.02 190) 0%, oklch(0.94 0.03 175) 100%);
   --shadow-card: 0 1px 2px oklch(0.3 0.05 220 / 0.05), 0 10px 30px -12px oklch(0.3 0.05 220 / 0.18);
   --shadow-lift: 0 20px 45px -20px oklch(0.3 0.05 220 / 0.35);
+
+  /* Motion system — timing + easing tokens */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);      /* enter/exit, most UI */
+  --ease-emphasized: cubic-bezier(0.32, 0.72, 0, 1); /* larger surfaces, sheets */
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);   /* press release, snap-back */
+  --dur-instant: 90ms;   /* press / tap feedback */
+  --dur-fast: 160ms;     /* hover, focus, colour */
+  --dur-base: 260ms;     /* state change, reveal */
+  --dur-slow: 420ms;     /* page + section transitions */
 }
 
 .dark {
@@ -188,4 +197,117 @@
 
 @utility shadow-lift {
   box-shadow: var(--shadow-lift);
+}
+
+/* ---------- Motion utilities ---------- */
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes soft-in {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes sheen {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(220%); }
+}
+
+/* Entrance: content rises into place on load. Stagger with --delay. */
+@utility rise-in {
+  animation: rise-in var(--dur-slow) var(--ease-standard) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@utility soft-in {
+  animation: soft-in var(--dur-base) var(--ease-standard) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Interactive affordance: lift on hover, compress on press. */
+@utility interactive {
+  transition:
+    transform var(--dur-fast) var(--ease-standard),
+    box-shadow var(--dur-base) var(--ease-standard),
+    background-color var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard);
+  will-change: transform;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.985);
+    transition-duration: var(--dur-instant);
+  }
+}
+
+/* Card raise: shadow deepens, content settles upward. */
+@utility card-raise {
+  transition:
+    transform var(--dur-base) var(--ease-emphasized),
+    box-shadow var(--dur-base) var(--ease-emphasized);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    transition-duration: var(--dur-instant);
+  }
+}
+
+/* Underline draws from the leading edge — links and tabs. */
+@utility underline-draw {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 2px;
+    width: 100%;
+    background-color: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-standard);
+  }
+
+  &:hover::after,
+  &[data-active="true"]::after {
+    transform: scaleX(1);
+  }
+}
+
+/* One-pass sheen across a surface — draws the eye to a primary metric panel. */
+@utility sheen-once {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 45%;
+    background-image: linear-gradient(100deg, transparent, oklch(1 0 0 / 0.18), transparent);
+    animation: sheen 1400ms var(--ease-emphasized) 600ms both;
+  }
+}
+
+/* Respect reduced-motion: keep feedback, drop travel. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+  }
 }
