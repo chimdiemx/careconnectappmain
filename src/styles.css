@@ -128,42 +128,42 @@
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --success: oklch(0.62 0.13 155);
-  --success-foreground: oklch(0.99 0.005 190);
-  --warning: oklch(0.78 0.14 75);
-  --warning-foreground: oklch(0.28 0.06 60);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.208 0.042 265.755);
-  --sidebar-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.279 0.041 260.031);
-  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+  --background: oklch(0.19 0.038 276.8);
+  --foreground: oklch(0.964 0.007 268.5);
+  --card: oklch(0.255 0.052 276.8);
+  --card-foreground: oklch(0.964 0.007 268.5);
+  --popover: oklch(0.255 0.052 276.8);
+  --popover-foreground: oklch(0.964 0.007 268.5);
+  --primary: oklch(0.55 0.093 273.5);
+  --primary-foreground: oklch(0.964 0.007 268.5);
+  --secondary: oklch(0.36 0.075 274.8);
+  --secondary-foreground: oklch(0.964 0.007 268.5);
+  --muted: oklch(0.32 0.065 275.5);
+  --muted-foreground: oklch(0.801 0.033 274);
+  --accent: oklch(0.739 0.053 287.5);
+  --accent-foreground: oklch(0.19 0.038 276.8);
+  --destructive: oklch(0.62 0.08 355.7);
+  --destructive-foreground: oklch(0.964 0.007 268.5);
+  --success: oklch(0.72 0.09 175);
+  --success-foreground: oklch(0.19 0.038 276.8);
+  --warning: oklch(0.769 0.116 40.5);
+  --warning-foreground: oklch(0.19 0.038 276.8);
+  --border: oklch(0.739 0.053 287.5 / 0.18);
+  --input: oklch(0.739 0.053 287.5 / 0.22);
+  --ring: oklch(0.739 0.053 287.5);
+  --chart-1: oklch(0.55 0.093 273.5);
+  --chart-2: oklch(0.739 0.053 287.5);
+  --chart-3: oklch(0.769 0.116 40.5);
+  --chart-4: oklch(0.62 0.08 355.7);
+  --chart-5: oklch(0.457 0.088 272.8);
+  --sidebar: oklch(0.225 0.045 276.8);
+  --sidebar-foreground: oklch(0.964 0.007 268.5);
+  --sidebar-primary: oklch(0.739 0.053 287.5);
+  --sidebar-primary-foreground: oklch(0.19 0.038 276.8);
+  --sidebar-accent: oklch(0.36 0.075 274.8);
+  --sidebar-accent-foreground: oklch(0.964 0.007 268.5);
+  --sidebar-border: oklch(0.739 0.053 287.5 / 0.16);
+  --sidebar-ring: oklch(0.739 0.053 287.5);
 }
 
 @layer base {
@@ -200,6 +200,42 @@
 
 @utility shadow-lift {
   box-shadow: var(--shadow-lift);
+}
+
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+/* Atmospheric haze + bloom behind hero/section content. */
+@utility bg-atmosphere {
+  background-image: var(--gradient-glow), var(--gradient-soft);
+}
+
+/* Glassmorphic surface with neon edge lighting. */
+@utility glass-panel {
+  background-color: color-mix(in oklab, var(--card) 55%, transparent);
+  backdrop-filter: blur(22px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--accent) 22%, transparent);
+  box-shadow: var(--shadow-card);
+}
+
+/* Reflective top highlight for cards and panels. */
+@utility surface-reflect {
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background-image: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--accent) 60%, transparent),
+      transparent
+    );
+  }
 }
 
 /* ---------- Motion utilities ---------- */
