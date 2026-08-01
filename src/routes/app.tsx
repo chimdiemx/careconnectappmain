@@ -6,15 +6,17 @@ import {
   ClipboardList,
   LayoutDashboard,
   LogOut,
+  Bell,
   Search,
   Settings,
   Stethoscope,
   UserRound,
   Users,
 } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuth, roleLabel } from "@/lib/auth";
 import { fullName } from "@/lib/clinic";
+import { fetchNotifications } from "@/lib/queries";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -28,6 +30,7 @@ const NAV = [
   { to: "/app/appointments", label: "Appointments", icon: CalendarDays, roles: null },
   { to: "/app/book", label: "Book appointment", icon: CalendarPlus, roles: ["patient", "receptionist", "admin"] },
   { to: "/app/records", label: "Medical records", icon: ClipboardList, roles: null },
+  { to: "/app/notifications", label: "Notifications", icon: Bell, roles: null },
   { to: "/app/doctors", label: "Doctors", icon: Stethoscope, roles: null },
   { to: "/app/patients", label: "Patients", icon: Users, roles: ["doctor", "receptionist", "admin"] },
   { to: "/app/search", label: "Search", icon: Search, roles: null },
@@ -40,6 +43,14 @@ function AppLayout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const notificationsQuery = useQuery({
+    queryKey: ["notifications", session?.user?.id],
+    queryFn: fetchNotifications,
+    enabled: Boolean(session?.user),
+    refetchInterval: 60000,
+  });
+  const unreadCount = (notificationsQuery.data ?? []).filter((n) => !n.is_read).length;
 
   useEffect(() => {
     if (!loading && !session) {
@@ -88,6 +99,11 @@ function AppLayout() {
             >
               <item.icon className="size-4 transition-transform duration-[var(--dur-base)] ease-[var(--ease-spring)] group-hover:scale-110" />
               {item.label}
+              {item.to === "/app/notifications" && unreadCount > 0 ? (
+                <span className="ml-auto flex min-w-5 items-center justify-center rounded-full bg-sidebar-primary px-1.5 py-0.5 text-[10px] font-semibold text-sidebar-primary-foreground">
+                  {unreadCount}
+                </span>
+              ) : null}
             </Link>
           ))}
         </nav>
@@ -123,6 +139,7 @@ function AppLayout() {
               )}
             >
               {item.label}
+              {item.to === "/app/notifications" && unreadCount > 0 ? ` (${unreadCount})` : ""}
             </Link>
           ))}
         </div>
